@@ -10,7 +10,7 @@
 # time: 
 # site: 
 # spp.group: 
-# occurrence.tresh:
+# occurrence.tresh: 
 
 cScorePairWisePerGroup <- function(m, time, site, spp.group, occurrence.tresh) {
   

@@ -6,4 +6,4 @@
 #                        of species in a collection of samples
 
 source("cScore.R")
-source("cScorePairWise.R")
+source("cScorePairWise.R") 

@@ -36,7 +36,7 @@ cScore <- function(m) {
   
   stop("'m' is not a two species (columns) by n sites (rows) 
        presence-absence matrix")
-  
+   
 }
 
 # REFERENCE
