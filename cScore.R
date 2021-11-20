@@ -7,9 +7,19 @@
 
 #  ARGUMENTS
 # m: A matrix of two species (columns) by n samples (rows)
+# standardize: Logical. If TRUE, c-score is standardize to number of potential
+#              combinations between samples.
 
 
-cScore <- function(m) {
+cScore <- function(m, ...) {
+
+    
+  extra.arg <- list(...)
+  if( "standardize" %in% names(extra.arg) ) {
+    standardize <- extra.arg[["standardize"]]
+  } else {
+    standardize <- FALSE 
+  }
   
   if( is.matrix(m) ) {
     
@@ -23,6 +33,10 @@ cScore <- function(m) {
           r_i <- sum( m[,1] )
           r_j <- sum( m[,2] )
           cScore <- ( r_i - S_ij ) * ( r_j - S_ij )
+          
+          if( standardize ) {
+            cScore <- cScore / ( ( ( nrow(m)^ 2 ) / 2 ) - (nrow(m) / 2) ) 
+          }
           
           return(cScore)
           

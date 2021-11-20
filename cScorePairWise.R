@@ -7,8 +7,18 @@
 
 #  ARGUMENTS
 # m: A matrix of species by samples.
+# standardize: Logical. If TRUE, c-score is standardize to number of potential
+#              combinations between samples.
 
-cScorePairWise <- function(m) {
+
+cScorePairWise <- function(m, ...) {
+  
+  extra.arg <- list(...)
+  if( "standardize" %in% names(extra.arg) ) {
+    standardize <- extra.arg[["standardize"]]
+  } else {
+    standardize <- FALSE 
+  }
   
   if( is.matrix(m) ) {
     
@@ -31,9 +41,7 @@ cScorePairWise <- function(m) {
               
               m.tmp <- m[ , c(i, j)]
               
-              m.tmp <- m.tmp[rowSums(m.tmp) > 0, ]
-              
-              cScoreMatrix[j,i] <- cScore(m.tmp)
+              cScoreMatrix[j,i] <- cScore(m.tmp, standardize = standardize)
               
             } 
             
