@@ -15,13 +15,13 @@ cScore <- function(m) {
     
     if( ncol(m) == 2 ) {
       
-      if( all.equal( unique( c(m) ), c(0, 1) ) ){
+      if( all.equal( sort( unique( c(m, 0, 1) ) ), c(0, 1) ) ){
 
         if( sum( rowSums(m) > 0 ) >= 2 ) {
           
           S_ij <- sum( ( m[,1] == 1 ) & (m[,2] == 1) )
-          r_i <- sum( ( m[,1] == 1 ) & (m[,2] == 0) )
-          r_j <- sum( ( m[,1] == 0 ) & (m[,2] == 1) )
+          r_i <- sum( m[,1] )
+          r_j <- sum( m[,2] )
           cScore <- ( r_i - S_ij ) * ( r_j - S_ij )
           
           return(cScore)

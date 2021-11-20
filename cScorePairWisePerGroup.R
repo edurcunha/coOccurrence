@@ -28,12 +28,12 @@ cScorePairWisePerGroup <- function(m, time, site, spp.group, occurrence.tresh) {
     for(j in i:length(spp.group.lab)) {
       
       spp.group.contrasts <- c(spp.group.contrasts, 
-                               list(c(spp.group.lab[i], spp.group.lab[j])))
+                               list( sort( c(spp.group.lab[i], 
+                                             spp.group.lab[j]) ) ) )
       
     } 
     
   }
-  
   
   for(i in seq_along(site.lab) ) {
     
@@ -43,22 +43,38 @@ cScorePairWisePerGroup <- function(m, time, site, spp.group, occurrence.tresh) {
       
       spp.include <- colSums(m.tmp) >= occurrence.tresh
       
-      m.tmp <- m.tmp[ , spp.include]
+      samples.include <- rowSums(m.tmp) > 0
       
-      spp.group.tmp <- spp.group[spp.include]
+      m.tmp <- m.tmp[samples.include, spp.include, drop=F]      
       
-      
-      
-      
-      for(k in  seq_along(spp.group.contrasts) ) {
+      if( ncol(m.tmp) > 1 && nrow(m.tmp) > 1 ) {
         
-      }          
-    }    
+        n.spp <- ncol(m.tmp)
+        
+        spp.group.tmp <- spp.group[spp.include]  
+        
+        c.score.pairwise.tmp <- c( cScorePairWise(m.tmp) )
+        
+        index.pos.tmp <- seq_along(c.score.pairwise.tmp)
+        
+        valid.index.tmp <- !is.na(c.score.pairwise.tmp)
+        
+        c.score.vals <- c.score.pairwise.tmp[valid.index.tmp]
+        
+        sp.pos1 <- index.pos.tmp[valid.index.tmp] %% n.spp
+        
+        sp.pos2 <- index.pos.tmp[valid.index.tmp] %/% n.spp
+      
+        }
+      
+
+
+      
+      
+
+      
+    } 
+    
   }
-  
-  
-  
-  
-  
   
 }

@@ -12,9 +12,9 @@ cScorePairWise <- function(m) {
   
   if( is.matrix(m) ) {
     
-    if( ncol(m) == 2 ) {
+    if( ncol(m) >= 2 ) {
        
-      if( all.equal( unique( c(m) ), c(0, 1) ) ){
+      if( all.equal( sort( unique( c(m, 0, 1) ) ), c(0, 1) ) ){
         
         if( sum( rowSums(m) > 0 ) >= 2 ) {
           
