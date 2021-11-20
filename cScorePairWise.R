@@ -14,10 +14,15 @@
 cScorePairWise <- function(m, ...) {
   
   extra.arg <- list(...)
+  
   if( "standardize" %in% names(extra.arg) ) {
+    
     standardize <- extra.arg[["standardize"]]
+    
   } else {
+    
     standardize <- FALSE 
+    
   }
   
   if( is.matrix(m) ) {

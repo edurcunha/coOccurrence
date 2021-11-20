@@ -3,10 +3,10 @@
 ################################################################################
 
 #  FUNCTION DESCRIPTION: This function calculates the c-score index for a pair 
-#                        of species in a collection of samples
+#                        of species in a collection of samples.
 
 #  ARGUMENTS
-# m: A matrix of two species (columns) by n samples (rows)
+# m: A matrix of two species (columns) by n samples (rows).
 # standardize: Logical. If TRUE, c-score is standardize to number of potential
 #              combinations between samples.
 
@@ -15,10 +15,15 @@ cScore <- function(m, ...) {
 
     
   extra.arg <- list(...)
+  
   if( "standardize" %in% names(extra.arg) ) {
+    
     standardize <- extra.arg[["standardize"]]
+    
   } else {
-    standardize <- FALSE 
+    
+    standardize <- FALSE
+    
   }
   
   if( is.matrix(m) ) {

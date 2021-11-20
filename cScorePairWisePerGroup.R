@@ -6,22 +6,29 @@
 #                        of species in sets of sample collections
 
 #  ARGUMENTS
-# m: 
-# time: 
-# site: 
-# spp.group: 
-# occurrence.tresh: 
-# standardize
+# m: A matrix of species by samples.
+# time: A vector of labels indicating the time period of each sample.
+# site: A vector of labels indicating the site of each sample.
+# spp.group: A vector of labels indicating the category of each species.
+# occurrence.tresh: A number indicating the threshold of occurrence to 
+#                   include species in the c-score calculation.
+# standardize: Logical. If TRUE, c-score is standardize to number of potential
+#              combinations between samples.
 
 cScorePairWisePerGroup <- function(m, time, site, spp.group, 
                                    occurrence.tresh, ...) {
   
 
   extra.arg <- list(...)
+  
   if( "standardize" %in% names(extra.arg) ) {
+    
     standardize <- extra.arg[["standardize"]]
+    
   } else {
+    
     standardize <- FALSE 
+    
   }
   
   dataset <- matrix(0, 0, 5, dimnames = list( NULL, 

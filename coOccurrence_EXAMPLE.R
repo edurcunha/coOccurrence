@@ -31,7 +31,7 @@ site <- rep( rep(c("Parana", "Baia"), each = 5), 2 )
 # Creates a vector indicating the group the species belong 
 spp.group <- rep( c("native", "non-native"), each = 5)
 
-# Assigns the minimum threshold of occurrence to include species in c-score
+# Assigns the minimum threshold of occurrence to include species in the c-score
 # calculations
 occurrence.tresh <- 1
 
