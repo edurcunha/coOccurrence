@@ -21,19 +21,19 @@ cScorePairWisePerGroup <- function(m, time, site, spp.group, occurrence.tresh) {
   spp.group.lab <- levels( as.factor(spp.group) )
   
   
-  spp.group.contrasts <- list()
-  
-  for(i in seq_along(spp.group.lab)) {
-    
-    for(j in i:length(spp.group.lab)) {
-      
-      spp.group.contrasts <- c(spp.group.contrasts, 
-                               list( sort( c(spp.group.lab[i], 
-                                             spp.group.lab[j]) ) ) )
-      
-    } 
-    
-  }
+  # spp.group.contrasts <- list()
+  # 
+  # for(i in seq_along(spp.group.lab)) {
+  #   
+  #   for(j in i:length(spp.group.lab)) {
+  #     
+  #     spp.group.contrasts <- c(spp.group.contrasts, 
+  #                              list( sort( c(spp.group.lab[i], 
+  #                                            spp.group.lab[j]) ) ) )
+  #     
+  #   } 
+  #   
+  # }
   
   for(i in seq_along(site.lab) ) {
     
@@ -51,6 +51,8 @@ cScorePairWisePerGroup <- function(m, time, site, spp.group, occurrence.tresh) {
         
         n.spp <- ncol(m.tmp)
         
+        spp.names <- colnames(m.tmp)
+        
         spp.group.tmp <- spp.group[spp.include]  
         
         c.score.pairwise.tmp <- c( cScorePairWise(m.tmp) )
@@ -61,17 +63,31 @@ cScorePairWisePerGroup <- function(m, time, site, spp.group, occurrence.tresh) {
         
         c.score.vals <- c.score.pairwise.tmp[valid.index.tmp]
         
-        sp.pos1 <- index.pos.tmp[valid.index.tmp] %% n.spp
+        sp.pos1 <- ( ( index.pos.tmp[valid.index.tmp] - 1 ) %/% n.spp ) + 1
         
-        sp.pos2 <- index.pos.tmp[valid.index.tmp] %/% n.spp
-      
+        sp.pos2 <- ( ( index.pos.tmp[valid.index.tmp] - 1 ) %% n.spp ) + 1
+        
+        sp.pos <- cbind(sp.pos1, sp.pos2)
+        
+        tags.tmp <- apply(sp.pos, MARGIN = 1, function(x) {
+          
+          spp.order <- order(spp.group.tmp[x[1]], spp.group.tmp[x[2]])
+          
+          tags.tmp <- c( paste(spp.group.tmp[spp.order], collapse = ' vs '),
+          
+          paste(spp.names[spp.order], collapse = ' vs ') )
+          
+          return(tags.tmp)
+
+        } )
+        
+        ############## Continuar
+        tags.tmp
+        c.score.vals
+        site.lab[i]
+        time.lab[j]
+        
         }
-      
-
-
-      
-      
-
       
     } 
     
