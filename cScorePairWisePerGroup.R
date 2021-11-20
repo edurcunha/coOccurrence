@@ -97,4 +97,8 @@ cScorePairWisePerGroup <- function(m, time, site, spp.group,
     
   }
   
+  dataset <- as.data.frame(dataset)
+  
+  return(dataset)
+  
 }

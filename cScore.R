@@ -27,7 +27,7 @@ cScore <- function(m, ...) {
       
       if( all.equal( sort( unique( c(m, 0, 1) ) ), c(0, 1) ) ){
 
-        if( sum( rowSums(m) > 0 ) >= 2 ) {
+        if( sum( rowSums(m) > 0 ) >= 1 ) {
           
           S_ij <- sum( ( m[,1] == 1 ) & (m[,2] == 1) )
           r_i <- sum( m[,1] )
