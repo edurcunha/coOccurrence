@@ -15,6 +15,7 @@
 # standardize: Logical. If TRUE, c-score is standardize to number of potential
 #              combinations between samples.
 
+
 cScorePairWisePerGroup <- function(m, time, site, spp.group, 
                                    occurrence.tresh, ...) {
   
