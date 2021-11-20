@@ -8,3 +8,4 @@
 source("cScore.R")
 source("cScorePairWise.R")
 source("cScorePairWisePerGroup.R")
+source("cScoreRand.R")
