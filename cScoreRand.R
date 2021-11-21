@@ -32,7 +32,7 @@ cScoreRand <- function(m, ...) {
   
   if( "rand" %in% names(extra.arg) ) {
     
-    rand <- extra.arg[["rand"]]
+    rand <- extra.arg[["rand"]] 
     
   } else {
     
