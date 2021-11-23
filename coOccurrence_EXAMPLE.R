@@ -36,6 +36,6 @@ spp.group <- rep( c("native", "non-native"), each = 5)
 occurrence.tresh <- 1
 
 # Builds the c-score dataset  
-dataset <- cScorePairWisePerGroup(m, time, site, spp.group, occurrence.tresh, standardize = standardize)
-
+dataset <- cScorePairWisePerGroup(m, time, site, spp.group, occurrence.tresh, standardize = TRUE,
+                                         null.model = TRUE, rand = 99)
 
