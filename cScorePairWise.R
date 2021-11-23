@@ -62,8 +62,7 @@ cScorePairWise <- function(m, ...) {
     
   }
   
-  stop("'m' is not a two species (columns) by n sites (rows) 
-       presence-absence matrix")
+  stop("'m' is not a species (columns) by sites (rows) presence-absence matrix. Please, check if values are only 1 and 0, and if the 'm' object is a matrix")
   
 }
 
