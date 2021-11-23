@@ -7,23 +7,27 @@
 
 #  ARGUMENTS
 # m: A matrix of species by samples.
-# standardize: Logical. If TRUE, c-score is standardize to number of potential
-#              combinations between samples.
-
+# standardize: Logical. If TRUE, c-score is standardized to the number 
+#              of potential combinations between samples.
+# null.model: Logical. If TRUE, the mean and sd of the c-score null
+#             model is provided in the output.
+# rand: A number indicating the number of random collections of samples to 
+#       generate.
 
 cScorePairWise <- function(m, ...) {
   
-  extra.arg <- list(...)
+  extra.arg <- list(
+    standardize = FALSE,
+    null.model = FALSE,
+    rand = 999
+  )
   
-  if( "standardize" %in% names(extra.arg) ) {
-    
-    standardize <- extra.arg[["standardize"]]
-    
-  } else {
-    
-    standardize <- FALSE 
-    
-  }
+  ellipsis <- list(...)
+  
+  arg.replace <- names(extra.arg) %in% names(ellipsis)
+  
+  extra.arg[arg.replace] <- ellipsis[names(extra.arg)[arg.replace] ] 
+  
   
   if( is.matrix(m) ) {
     
@@ -40,15 +44,50 @@ cScorePairWise <- function(m, ...) {
           cScoreMatrix <- matrix(NA, n.spp, n.spp, 
                                  dimnames = list(spp.names, spp.names))
           
+          if( extra.arg[['null.model']] ) {
+            
+            NullMatrixMean <- matrix(NA, n.spp, n.spp, 
+                                   dimnames = list(spp.names, spp.names))
+            
+            NullMatrixSD <- matrix(NA, n.spp, n.spp, 
+                                   dimnames = list(spp.names, spp.names))
+            
+          }
+          
           for(i in 1:(n.spp-1)) {
             
             for(j in (i + 1):n.spp){
               
               m.tmp <- m[ , c(i, j)]
               
-              cScoreMatrix[j,i] <- cScore(m.tmp, standardize = standardize)
+              c.score.tmp <- cScore(m.tmp, 
+                                    standardize = extra.arg[['standardize']],
+                                    null.model = extra.arg[['null.model']],
+                                    rand = extra.arg[['rand']])
+              
+              if( extra.arg[['null.model']] ) {
+                
+                cScoreMatrix[j,i] <- c.score.tmp$c.score
+                
+                NullMatrixMean[j,i] <- mean(c.score.tmp$null.dist)
+                
+                NullMatrixSD[j,i] <- sd(c.score.tmp$null.dist)
+                
+              } else {
+                
+                cScoreMatrix[j,i] <- c.score.tmp
+                
+              }
               
             } 
+            
+          }
+          
+          if( extra.arg[['null.model']] ) {
+            
+            cScoreMatrix <- list(c.scores = cScoreMatrix,
+                                 null.dist.mean = NullMatrixMean,
+                                 null.dist.sd = NullMatrixSD)
             
           }
           

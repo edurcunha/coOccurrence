@@ -18,27 +18,17 @@
 
 cScoreRand <- function(m, ...) {
   
-  extra.arg <- list(...)
+  extra.arg <- list(
+    standardize = FALSE,
+    rand = 999
+  )
   
-  if( "standardize" %in% names(extra.arg) ) {
-    
-    standardize <- extra.arg[["standardize"]]
-    
-  } else {
-    
-    standardize <- FALSE
-    
-  }
+  ellipsis <- list(...)
   
-  if( "rand" %in% names(extra.arg) ) {
-    
-    rand <- extra.arg[["rand"]] 
-    
-  } else {
-    
-    rand <- 999
-    
-  }
+  arg.replace <- names(extra.arg) %in% names(ellipsis)
+  
+  extra.arg[arg.replace] <- ellipsis[names(extra.arg)[arg.replace] ] 
+  
   
   if( is.matrix(m) ) {
     
@@ -48,15 +38,16 @@ cScoreRand <- function(m, ...) {
         
         if( sum( rowSums(m) > 0 ) >= 1 ) {
           
-          cScoreRand <- rep(NA, rand)
+          cScoreRand <- rep(NA, extra.arg[['rand']])
           
-          for(i in 1:rand) {
+          for(i in 1:extra.arg[['rand']]) {
             
-            m.rand <- m.tmp
+            m.rand <- m
             
             m.rand[,2] <- m.rand[ sample( nrow(m.rand) ) ,2] 
             
-            cScoreRand[i] <- cScore(m.rand, standardize = standardize)
+            cScoreRand[i] <- cScore(m = m.rand, 
+                                    standardize = extra.arg[['standardize']])
             
           }
           
