@@ -23,10 +23,10 @@ m <- matrix( rbinom(200, 1, 0.5), 20, 10)
 colnames(m) <- LETTERS[1:10]               
 
 # Creates a vector indicating the time period of the samples 
-time <- rep(c("After", "Before"), each = 10)
+time <- rep( c("After", "Before"), each = 10)
 
 # Creates a vector indicating the site of the samples
-site <- rep( rep(c("Parana", "Baia"), each = 5), 2 )
+site <- rep( rep( c("Parana", "Baia"), each = 5), 2 )
 
 # Creates a vector indicating the group the species belong 
 spp.group <- rep( c("native", "non-native"), each = 5)
@@ -36,6 +36,7 @@ spp.group <- rep( c("native", "non-native"), each = 5)
 occurrence.tresh <- 1
 
 # Builds the c-score dataset  
-dataset <- cScorePairWisePerGroup(m, time, site, spp.group, occurrence.tresh, standardize = TRUE,
-                                         null.model = TRUE, rand = 99)
+dataset <- cScorePairWisePerGroup(m = m, time = time, site = site, 
+                    spp.group = spp.group, occurrence.tresh = occurrence.tresh, 
+                    standardize = TRUE, null.model = TRUE, rand = 9999)
 
