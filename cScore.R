@@ -44,7 +44,9 @@ cScore <- function(m, ...) {
           
           if( extra.arg[['standardize']] ) {
             
-            cScore <- cScore / ( ( ( nrow(m)^ 2 ) / 2 ) - (nrow(m) / 2) )
+            # cScore <- cScore / ( ( ( nrow(m)^ 2 ) / 2 ) - (nrow(m) / 2) )
+            
+            cScore <- cScore / ( r_i * r_j )
             
           }
           
