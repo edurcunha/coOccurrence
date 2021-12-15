@@ -42,10 +42,14 @@ standardize <- TRUE
 null.model <- TRUE
 
 # Assign the number of randomizations for creating the null-model 
-rand = 9999
+rand = 999
 
 # Build the c-score dataset  
 dataset <- cScorePairWisePerGroup(m = m, time = time, site = site, 
                     spp.group = spp.group, occurrence.tresh = occurrence.tresh, 
-                    standardize = TRUE, null.model = TRUE, rand = 9999)
+                    standardize = TRUE, null.model = TRUE, rand = 999)
+
+dataset
+
+
 
